@@ -9,6 +9,7 @@ const smsService = require("./twilio_client")
 const userService = require('./users/users.service')(db)
 
 const indexRouter = require("./routes/index");
+const githubRouter = require("./github/github.routes");
 const usersRouter = require("./users/users.routes")(userService, smsService);
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/github-users", githubRouter);
 app.use("/users", usersRouter);
 
 module.exports = app;
