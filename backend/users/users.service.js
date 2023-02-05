@@ -74,22 +74,24 @@ function usersService(db) {
     try {
       const userData = await getUserByPhoneNumber(phoneNumber);
       const userRef = usersRef.doc(userData.id);
-      await userRef.update({
-        favoriteGithubUsers: FieldValue.arrayUnion(githubUserId),
-      });
+
+      // Add Github user to the favorite list if it does not exist in the list.
+      // Else remove the Github user from the list
+      const hasGithubUser = userData.favoriteGithubUsers.includes(githubUserId);
+      if (hasGithubUser) {
+        await userRef.update({
+          favoriteGithubUsers: FieldValue.arrayRemove(githubUserId),
+        });
+      } else {
+        await userRef.update({
+          favoriteGithubUsers: FieldValue.arrayUnion(githubUserId),
+        });
+      }
     } catch (err) {
       console.error(err);
       throw new Error();
     }
   }
-
-  // async function getUserProfile(phoneNumber) {
-  //     try {
-  //         const user = await getUserByPhoneNumber(phoneNumber)
-  //     } catch(err) {
-  //         console.error(err)
-  //     }
-  // }
 
   return {
     addUser,
