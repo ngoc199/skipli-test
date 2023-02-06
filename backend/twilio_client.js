@@ -18,6 +18,7 @@ async function sendMessage(toNumber, message) {
     console.info(sentMessage.sid);
   } catch (err) {
     console.error(err);
+    throw err;
   }
 }
 

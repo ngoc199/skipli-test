@@ -5,6 +5,7 @@ const { FieldValue } = require("firebase-admin/firestore");
  */
 function usersService(db) {
   const usersRef = db.collection("users");
+  const GITHUB_API_URL = "https://api.github.com";
 
   /**
    * @param {string} phoneNumber
@@ -77,20 +78,83 @@ function usersService(db) {
 
       // Add Github user to the favorite list if it does not exist in the list.
       // Else remove the Github user from the list
-      const hasGithubUser = userData.favoriteGithubUsers.includes(githubUserId);
-      if (hasGithubUser) {
-        await userRef.update({
-          favoriteGithubUsers: FieldValue.arrayRemove(githubUserId),
-        });
-      } else {
-        await userRef.update({
-          favoriteGithubUsers: FieldValue.arrayUnion(githubUserId),
-        });
-      }
+      await userRef.update({
+        favoriteGithubUsers: FieldValue.arrayUnion(githubUserId),
+      });
     } catch (err) {
       console.error(err);
       throw new Error();
     }
+  }
+
+  /**
+   * @param {string} query
+   * @param {number} page
+   * @param {number} perPage
+   */
+  async function searchGithubUsers(phoneNumber, query, page, perPage) {
+    const route = `${GITHUB_API_URL}/search/users`;
+    const searchParams = new URLSearchParams({
+      q: query,
+      page,
+      per_page: perPage,
+    });
+    const response = await fetch(`${route}?${searchParams.toString()}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    });
+    if (response.status !== 200) {
+      return response.text();
+    }
+    const githubUsers = await response.json();
+    const user = await getUserByPhoneNumber(phoneNumber);
+    const favoriteGithubUsers = user.favoriteGithubUsers
+      ? user.favoriteGithubUsers
+      : [];
+    const sanitizedGithubUsers = githubUsers.items.map((ghUser) => {
+      return {
+        id: ghUser.id,
+        login: ghUser.login,
+        avatar_url: ghUser.avatar_url,
+        html_url: ghUser.html_url,
+        public_repos: ghUser.repos_url,
+        followers: ghUser.followers_url,
+        liked: favoriteGithubUsers.includes(ghUser.id),
+      };
+    });
+    return {
+      total: githubUsers.total_count,
+      github_users: sanitizedGithubUsers,
+    };
+  }
+
+  /**
+   * @param {string} id
+   */
+  async function findGithubUserProfile(id) {
+    const route = `${GITHUB_API_URL}/user/${id}`;
+
+    // Return: { login: “”, id: “”, avatar_url: “”,  html_url: “”, public_repos, followers }
+    const response = await fetch(route, {
+      method: "GET",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    });
+    if (response.status !== 200) {
+      return response.text();
+    }
+    const githubUser = await response.json();
+    return {
+      id: githubUser.id,
+      login: githubUser.login,
+      avatar_url: githubUser.avatar_url,
+      html_url: githubUser.html_url,
+      public_repos: githubUser.repos_url,
+      followers: githubUser.followers_url,
+    };
   }
 
   return {
@@ -98,6 +162,8 @@ function usersService(db) {
     getUserByPhoneNumber,
     verifyUser,
     likeGithubUser,
+    searchGithubUsers,
+    findGithubUserProfile,
   };
 }
 

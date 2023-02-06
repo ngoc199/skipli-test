@@ -22,10 +22,13 @@ function usersRoute(userService, smsService) {
     const accessCode = new AccessCode();
     await userService.addUser(phoneNumber, accessCode);
 
-    // Send the access code to the registered phone number
-    await smsService.sendMessage(accessCode.toString());
-
-    res.status(201).send();
+    try {
+      // Send the access code to the registered phone number
+      await smsService.sendMessage(phoneNumber, accessCode.toString());
+      res.status(201).send();
+    } catch (err) {
+      res.status(400).send("Invalid phone number");
+    }
   });
 
   router.post("/validate", async function (req, res) {
@@ -51,7 +54,24 @@ function usersRoute(userService, smsService) {
   router.get("/:phoneNumber/profile", async function (req, res) {
     const { phoneNumber } = req.params;
     const user = await userService.getUserByPhoneNumber(phoneNumber);
-    return res.status(200).json(GetUserProfileResponse.parse(user));
+    const favoriteGithubUsersPromises = user.favoriteGithubUsers.map(
+      (ghUserId) => userService.findGithubUserProfile(ghUserId)
+    );
+    const favoriteGithubUsers = await Promise.all(favoriteGithubUsersPromises);
+    return res
+      .status(200)
+      .json({ favoriteGithubUsers });
+  });
+
+  router.get("/search-github-users", async function (req, res) {
+    const { q, page, per_page, phone_number } = req.query;
+    const users = await userService.searchGithubUsers(
+      phone_number,
+      q,
+      page,
+      per_page
+    );
+    return res.status(200).json(users);
   });
 
   return router;
