@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Skipli Test Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the Frontend of [Skipli First-round Interview Test Project](https://docs.google.com/document/d/1miM6OzTwrSgwupInCigF_hJjUbBCsgTRt33-tzfeUUQ/edit?usp=sharing).
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+The frontend has the following features:
 
-### `npm start`
+- Create new user using phone number
+- Authenticate user
+- Search Github users
+- Like Github users
+- Display the user's profile with phone number and user's favorite Github users
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Run the command `npm install` in this directory to install all the dependencies of this project.
 
-### `npm test`
+If you don't have NodeJS installed on your computer, [install NodeJS](https://nodejs.org/en/) version 18.13.0 or above. The Node version used to build this project is specified in the [.nvmrc file](./.nvmrc).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Run Project
 
-### `npm run build`
+Run the command `npm start` in this directory to start the frontend of Skipli Test Project.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The website will be run at [localhost:3001](http://localhost:3001).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+In order for the frontend to work correctly, the [backend](../backend/README.md) should be started first.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+**Notice:** There are 3 routes in this project:
 
-### `npm run eject`
+1. "/": the search page
+2. "/login": the login page
+3. "/profile": the profile page
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The search page and the profile page are protected. Only the authenticated users can access those pages.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you are redirected to the login page, you might not be authenticated.
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Technologies
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The frontend of the Skipli Test Project uses:
 
-## Learn More
+- [ReactJS](https://reactjs.org/)
+- [Axios](https://github.com/axios/axios) to send requests to the backend
+- [Bootstrap](https://getbootstrap.com/) for styling
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Author
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[Ngoc Nguyen](ngocoder.com): [email](mailto:ngoc@ngocoder.com)
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
