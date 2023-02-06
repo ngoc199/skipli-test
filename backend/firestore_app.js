@@ -1,5 +1,6 @@
-const { initializeApp } = require("firebase-admin/app");
+const { initializeApp, cert } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
+const serviceAccount = require("./skipli-test-firebase-adminsdk-h2wza-531a6dc02d.json");
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 const firebaseConfig = {
@@ -9,6 +10,7 @@ const firebaseConfig = {
   storageBucket: "skipli-test.appspot.com",
   messagingSenderId: "185436079923",
   appId: "1:185436079923:web:868503fb849ec69b286046",
+  credential: cert(serviceAccount),
 };
 
 // Initialize Firebase
