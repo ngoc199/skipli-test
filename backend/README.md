@@ -29,11 +29,9 @@ If you want to run the integration test of this project, you have to do the foll
 1. Run the command `npm run db:up` to start the Firestore emulator. Firestore emulator is the local Firestore. All the data in this local Firestore will be deleted after testing.
 2. Run the command `npm run test:integration` to start testing.
 
-```
 **Notice:** The integration tests in this project only test the success condition, a.k.a. the happy path. This is due to the limited time and I only need to ensure some core features work as expected.
 
 In other words, the validation might not work properly and the errors might not be handled.
-```
 
 ## Technologies
 
@@ -42,6 +40,13 @@ The backend of the Skipli Test Project uses:
 - [ExpressJS](https://expressjs.com/)
 - [Twilio](https://www.twilio.com/) to send SMS
 - Firestore of [Firebase](https://firebase.google.com/) to store data
+
+## Things That Can Be Improved
+
+- Handle errors
+- Create separate environments: development, production
+- Use the environment variables instead of hard-coding
+- Use Inversion of Control library like [awilix](https://www.npmjs.com/package/awilix) to handle dependency injection
 
 ## Author
 

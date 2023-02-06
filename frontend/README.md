@@ -26,7 +26,6 @@ The website will be run at [localhost:3001](http://localhost:3001).
 
 In order for the frontend to work correctly, the [backend](../backend/README.md) should be started first.
 
-```
 **Notice:** There are 3 routes in this project:
 
 1. "/": the search page
@@ -36,7 +35,6 @@ In order for the frontend to work correctly, the [backend](../backend/README.md)
 The search page and the profile page are protected. Only the authenticated users can access those pages.
 
 If you are redirected to the login page, you might not be authenticated.
-```
 
 ## Technologies
 
@@ -45,6 +43,13 @@ The frontend of the Skipli Test Project uses:
 - [ReactJS](https://reactjs.org/)
 - [Axios](https://github.com/axios/axios) to send requests to the backend
 - [Bootstrap](https://getbootstrap.com/) for styling
+
+## Things That Can Be Improved
+
+- Add loading screen to let the user know what is happening
+- Use a library like [React Query](https://www.npmjs.com/package/react-query) to make requests for better data processing and caching
+- Create page layouts to make the website have consistent looking
+- Handle errors
 
 ## Author
 
