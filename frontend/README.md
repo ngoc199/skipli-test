@@ -51,6 +51,12 @@ The frontend of the Skipli Test Project uses:
 - Create page layouts to make the website have consistent looking
 - Handle errors
 
+## Problems with Github REST API
+
+Since the backend project using Github REST API, the latest change to the `public_repos` and `followers` properties causes a exceed rate-limit problem. You can read more about it in the [backend directory](../backend/README.md)
+
+If the Github users are not loaded to the screen, it might be caused by this issue.
+
 ## Author
 
 [Ngoc Nguyen](ngocoder.com): [email](mailto:ngoc@ngocoder.com)

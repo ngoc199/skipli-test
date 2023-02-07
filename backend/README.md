@@ -48,6 +48,14 @@ The backend of the Skipli Test Project uses:
 - Use the environment variables instead of hard-coding
 - Use Inversion of Control library like [awilix](https://www.npmjs.com/package/awilix) to handle dependency injection
 
+## Problems with Github REST API
+
+Since this project using Github REST API, the latest change to the `public_repos` and `followers` properties causes a exceed rate-limit problem.
+
+There are no support for the `public_repos` and `followers` properties in the search API, according to [the Github official document](https://docs.github.com/en/rest/search?apiVersion=2022-11-28#search-users). This is due to the [summary presentation](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#summary-representations) does not have the attributes that are computationally expensive.
+
+In order to display the `public_repos` and `followers` number, we have to make another request to the `users` endpoint for each found users. Because the amount of users found could be big, the amount of requests the backend have to make is big. It will easily exceed the rate-limit of Github REST API.
+
 ## Author
 
 [Ngoc Nguyen](ngocoder.com): [email](mailto:ngoc@ngocoder.com)
