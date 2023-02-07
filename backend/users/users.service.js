@@ -113,14 +113,18 @@ function usersService(db) {
     const favoriteGithubUsers = user.favoriteGithubUsers
       ? user.favoriteGithubUsers
       : [];
-    const sanitizedGithubUsers = githubUsers.items.map((ghUser) => {
+    const detailedGithubUsersPromises = githubUsers.items.map((ghUser) => {
+      return findGithubUserProfile(ghUser.id);
+    });
+      const detailedGithubUsers = await Promise.all(detailedGithubUsersPromises)
+    const sanitizedGithubUsers = detailedGithubUsers.map((ghUser) => {
       return {
         id: ghUser.id,
         login: ghUser.login,
         avatar_url: ghUser.avatar_url,
         html_url: ghUser.html_url,
-        public_repos: ghUser.repos_url,
-        followers: ghUser.followers_url,
+        public_repos: ghUser.public_repos,
+        followers: ghUser.followers,
         liked: favoriteGithubUsers.includes(ghUser.id),
       };
     });
@@ -152,8 +156,8 @@ function usersService(db) {
       login: githubUser.login,
       avatar_url: githubUser.avatar_url,
       html_url: githubUser.html_url,
-      public_repos: githubUser.repos_url,
-      followers: githubUser.followers_url,
+      public_repos: githubUser.public_repos,
+      followers: githubUser.followers,
     };
   }
 

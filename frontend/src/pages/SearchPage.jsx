@@ -101,8 +101,8 @@ function SearchPage() {
             login={user.login}
             avatarURL={user.avatar_url}
             htmlURL={user.html_url}
-            publicReposURL={user.public_repos}
-            followersURL={user.followers}
+            publicRepos={user.public_repos}
+            followers={user.followers}
             liked={user.liked}
           />
         );

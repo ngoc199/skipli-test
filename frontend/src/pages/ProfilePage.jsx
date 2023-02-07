@@ -29,8 +29,8 @@ function ProfilePage() {
             login={ghUser.login}
             avatarURL={ghUser.avatar_url}
             htmlURL={ghUser.html_url}
-            publicReposURL={ghUser.public_repos}
-            followersURL={ghUser.followers}
+            publicRepos={ghUser.public_repos}
+            followers={ghUser.followers}
             liked={true}
           />
         ))}

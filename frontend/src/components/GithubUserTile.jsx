@@ -8,14 +8,12 @@ export function GithubUserTile({
   login,
   avatarURL,
   htmlURL,
-  publicReposURL,
-  followersURL,
+  publicRepos,
+  followers,
   liked,
 }) {
   const { phoneNumber } = useAuth();
   const [isLiked, setIsLiked] = useState(liked);
-  const [publicRepos, setPublicRepos] = useState(null);
-  const [followers, setFollowers] = useState(null);
 
   const likeGithubUser = () => {
     axios
@@ -28,33 +26,6 @@ export function GithubUserTile({
       })
       .catch((err) => console.error(err));
   };
-
-  const getPublicRepos = () => {
-    if (publicRepos === null) {
-      axios
-        .get(publicReposURL)
-        .then((response) => {
-          setPublicRepos(() => response.data);
-        })
-        .catch((err) => console.error(err));
-    }
-  };
-
-  const getFollowers = () => {
-    if (followers === null) {
-      axios
-        .get(followersURL)
-        .then((response) => {
-          setFollowers(() => response.data);
-        })
-        .catch((err) => console.error(err));
-    }
-  };
-
-  const publicReposHeading = `public-repos-heading-${id}`;
-  const publicReposBody = `public-repos-body-${id}`;
-  const followersHeading = `followers-heading-${id}`;
-  const followersBody = `followers-body-${id}`;
 
   return (
     <div
@@ -85,81 +56,9 @@ export function GithubUserTile({
             )}
           </button>
         </div>
-        <div className="accordion">
-          <div className="accordion-item" onClick={getPublicRepos}>
-            <h2 className="accordion-header" id={publicReposHeading}>
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target={`#${publicReposBody}`}
-                aria-expanded="false"
-                aria-controls={publicReposBody}
-              >
-                Public Repositories
-              </button>
-            </h2>
-            <div
-              id={publicReposBody}
-              className="accordion-collapse collapse"
-              aria-labelledby={publicReposHeading}
-            >
-              <div className="accordion-body">
-                <ul>
-                  {publicRepos
-                    ? publicRepos.map((repo) => (
-                        <li key={repo.html_url}>
-                          <a
-                            href={repo.html_url}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {repo.name}
-                          </a>
-                        </li>
-                      ))
-                    : null}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="accordion-item" onClick={getFollowers}>
-            <h2 className="accordion-header" id={followersHeading}>
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target={`#${followersBody}`}
-                aria-expanded="false"
-                aria-controls={followersBody}
-              >
-                Followers
-              </button>
-            </h2>
-            <div
-              id={followersBody}
-              className="accordion-collapse collapse"
-              aria-labelledby={followersHeading}
-            >
-              <div className="accordion-body">
-                <ul>
-                  {followers
-                    ? followers.map((follower) => (
-                        <li key={follower.login}>
-                          <a
-                            href={follower.html_url}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {follower.login}
-                          </a>
-                        </li>
-                      ))
-                    : null}
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div>
+          <p>Public Repos: {publicRepos}</p>
+          <p>Followers: {followers}</p>
         </div>
       </div>
     </div>
