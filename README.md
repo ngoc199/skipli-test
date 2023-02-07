@@ -4,8 +4,8 @@ This is the repository of [Skipli First-round Interview Test Project](https://do
 
 This project contains 2 sub-projects:
 
-1. [Backend](./backend/README.md)
-2. [Frontend](./frontend/README.md)
+1. [Backend](./backend/)
+2. [Frontend](./frontend/)
 
 Please read the full instruction in each sub-directories to run the project. You should start with the [Backend](./backend/README.md) first.
 
